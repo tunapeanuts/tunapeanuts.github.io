@@ -1,0 +1,17 @@
+# OS / エディタ
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+
+# Claude Code のローカル設定
+.claude/
+
+# 秘密情報
+.env
+*.pem
