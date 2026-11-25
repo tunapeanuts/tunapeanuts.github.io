@@ -38,12 +38,20 @@ ul{{list-style:none;padding:0}}
 li{{padding:1em 0;border-bottom:1px solid #dce0e4}}
 li a{{font-size:1.2rem;font-weight:700;color:#254d77}}
 time{{float:right;color:#666b73;font-size:.85rem}}
+.contact{{margin-top:3em;padding:18px 22px;border:1px solid #dce0e4;border-radius:12px;background:#f6f7f8}}
+.contact h2{{font-size:1.05rem;margin:0 0 .4em}}
+.contact p{{margin:0;font-size:.92rem;color:#444}}
+a{{color:#254d77}}
 li p{{margin:.3em 0 0;color:#666b73;font-size:.95rem}}
 </style></head><body>
 <h1>Tips</h1>
 <ul>
 {rows}
 </ul>
+<section class="contact">
+<h2>誤りや不備を見つけたら</h2>
+<p>記事の誤りや分かりにくい点があれば，<a href="https://github.com/tunapeanuts/tunapeanuts.github.io/issues/new">GitHub の Issue</a> で連絡してほしい．記事名と該当箇所を書いてもらえると助かる．GitHub のアカウントが必要で，内容は公開される．</p>
+</section>
 </body></html>
 """, encoding="utf-8")
 print(f"index.html: {len(items)} articles")
