@@ -4,19 +4,26 @@ import html, re, datetime
 from pathlib import Path
 
 root = Path(__file__).parent
+# 既存の日付は index.html から引き継ぐ（記事を編集しても変わらない）
+old = re.findall(r'<a href="articles/([^"]+)">[^<]*</a><time>([^<]*)</time>',
+                 (root / "index.html").read_text(encoding="utf-8")
+                 if (root / "index.html").exists() else "")
+dates = {n: d for n, d in old}
+order = {n: i for i, (n, _) in enumerate(old)}
 items = []
 for p in (root / "articles").glob("*.html"):
     s = p.read_text(encoding="utf-8")
     t = re.search(r"<title>(.*?)</title>", s, re.S)
     d = re.search(r'<meta\s+name="description"\s+content="(.*?)"', s, re.S)
-    items.append((p.stat().st_mtime, p.name,
+    day = dates.get(p.name) or str(datetime.date.fromtimestamp(p.stat().st_mtime))
+    items.append(((day, -order.get(p.name, -1)), p.name,
                   t.group(1).strip() if t else p.stem,
                   d.group(1).strip() if d else ""))
-items.sort(reverse=True)  # 更新が新しい順
+items.sort(reverse=True)  # 日付が新しい順（同日は新規が先，既存は元の順）
 
 rows = "\n".join(
     f'<li><a href="articles/{n}">{t}</a>'
-    f'<time>{datetime.date.fromtimestamp(m)}</time>'
+    f'<time>{m[0]}</time>'
     f'<p>{d}</p></li>'
     for m, n, t, d in items)
 
